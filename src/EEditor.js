@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 import ME from 'react-monaco-editor';
 
 import shadow from './shadow';
@@ -9,7 +9,7 @@ const Main = styled.div`
     grid-area: ${props => props.grid};
     background-color: ${props => props.theme.dp6};
     color: ${props => props.theme.fontcol};
-    box-shadow: ${ shadow(6) };
+    box-shadow: ${ shadow(4) };
 `;
 
 const Header = styled.header`
@@ -25,19 +25,10 @@ const Wrapper = styled.div`
     width: 100%;
 `;
 
-const Editor = styled.textarea`
-    width: 100%;
-    height: 100%;
-    padding: 0.5em;
-    resize: none;
-    border: 0;
-    background-color: #00000055;
-    color: ${props => props.theme.fontcol};
-`;
-
-export default function EEditor(props) {
+export default props => {
     const { changeNotEe, notee, ee } = useContext(eeeContext);
-
+    const { theme } = useContext(ThemeContext);
+    
     let change, val;
     if(props.type === "notee") {
         change = changeNotEe;
@@ -54,13 +45,12 @@ export default function EEditor(props) {
             </Header>
             <Wrapper>
                 <ME 
-                    theme="vs-dark"
+                    theme={ theme === "light" ? "vs" : "vs-dark" }
                     options={{ 
                         minimap: {enabled: true},
                         language: "cpp",
                         lineNumbersMinChars: 4,
                         lineDecorationsWidth: 0,
-                        scrollbar: { verticalScrollbarSize: 0 }
                     }}
                     value={ val }
                     onChange={ value => change(value) }
