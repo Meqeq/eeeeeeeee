@@ -34,7 +34,7 @@ export default props => {
         change = changeNotEe;
         val = notee;
     } else {
-        change = "";
+        change = () => console.log("not implemented");
         val = ee;
     }
 
