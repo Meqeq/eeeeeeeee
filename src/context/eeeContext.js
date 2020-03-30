@@ -58,6 +58,14 @@ export const EeeProvider = ({ children }) => {
             });
         }
 
+        let alreadyDeclaredE = input.match(/ e+ /g);
+
+        if(alreadyDeclaredE) {
+            alreadyDeclaredE.forEach( (value, key) => {
+                input = input.replace(new RegExp(value, "g"), " alvar_kek_lel_" + key + " ");
+            });
+        }
+
         input = input.replace(/\/\/.*/g, "").replace(/\/\*(\*(?!\/)|[^*])*\*\//g, ""); // erase all comments
 
         input = "\n " + input.replace(/\n/g, " \n ").replace(/\t/g, "");
@@ -96,7 +104,7 @@ export const EeeProvider = ({ children }) => {
                             return `${p1} ${p2} ${p3}`;   
 
                         case ".":
-                            if(!isNaN(p1) && !isNaN(p3))
+                            if((!isNaN(p1) && !isNaN(p3)) || p1 === "'" || p2 === "'")
                                 return `${p1}${p2}${p3}`
                             else
                                 return `${p1} ${p2} ${p3}`; 
